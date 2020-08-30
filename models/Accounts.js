@@ -29,8 +29,10 @@ AccountsSchema.methods.generateJWT = function() {
   return jwt.sign({
     email: this.email,
     id: this._id,
-    exp: parseInt(expirationDate.getTime() / 1000, 10),
-  }, 'secret');
+    expiresIn: parseInt(expirationDate.getTime() / 1000, 10),
+    algorithm: 'HS256',
+
+  }, process.env.JWT_SECRET);
 }
 
 AccountsSchema.methods.toAuthJSON = function() {
